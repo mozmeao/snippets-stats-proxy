@@ -30,7 +30,9 @@ async def send_to_ga(data):
         config.statsd.incr('process_request.ga.exception')
 
 
-async def init(loop):
+def webserver():
+    loop = asyncio.get_event_loop()
+
     def webhook(request):
         data = {
             'agent': request.headers['USER-AGENT'],
@@ -46,20 +48,21 @@ async def init(loop):
 
         return aiohttp.web.Response(body=b'OK', content_type='text/plain')
 
-    app = web.Application(loop=loop)
+    app = web.Application()
     app.router.add_route('GET', '/foo', webhook)
+    return app
 
-    srv = await loop.create_server(app.make_handler(), '0.0.0.0', config.PORT)
-    print("Server started ...")
+application = webserver()
 
-    return srv
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    srv = loop.create_server(application.make_handler(), '0.0.0.0', config.PORT)
+    loop.create_task(srv)
+    print("Server started at {}...".format(config.PORT))
 
-loop = asyncio.get_event_loop()
-loop.create_task(init(loop))
-
-try:
-    loop.run_forever()
-except KeyboardInterrupt:
-    pass
-finally:
-    loop.close()
+    try:
+        loop.run_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        loop.close()
