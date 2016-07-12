@@ -6,7 +6,7 @@ from decouple import config
 
 PORT = config('PORT', default=8000)
 
-GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID')
+GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID', default=None)
 GOOGLE_ANALYTICS_DOMAIN = config('GOOGLE_ANALYTICS_DOMAIN', default='snippets.mozilla.com')
 GOOGLE_ANALYTICS_URL = config('GOOGLE_ANALYTICS_URL', default='https://ssl.google-analytics.com/collect')
 MOZILLA_ANALYTICS_URL = config('MOZILLA_ANALYTICS_URL', default='https://snippets-stats.mozilla.org/foo.html')
