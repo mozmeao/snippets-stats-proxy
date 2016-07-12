@@ -9,12 +9,10 @@ from aiohttp import web
 import config
 
 async def send_to_ga(data):
-    hittype = 'pageview'
     params = {
         'v': 1,
         'tid': config.GOOGLE_ANALYTICS_ID,
         'dh': config.GOOGLE_ANALYTICS_DOMAIN,
-        't': hittype,
         'ds': 'about:home',
         'cid': uuid.uuid4().hex,
         'ul': data.get('locale', ''),
@@ -23,6 +21,17 @@ async def send_to_ga(data):
         'dt': 'Snippet {}'.format(data.get('snippet_id')),
         'dp': '/show/{}/'.format(data.get('snippet_id')),
     }
+
+    if data.get('metric', 'impression') == 'impression':
+        hittype = {'t': 'pageview'}
+    else:
+        hittype = {
+            't': 'event',
+            'ec': 'clicks',
+            'ea': data.get('metric'),
+        }
+    params.update(hittype)
+
     try:
         async with aiohttp.get(config.GOOGLE_ANALYTICS_URL, params=params) as response:
             config.statsd.incr('process_request.ga.{}'.format(response.status))
