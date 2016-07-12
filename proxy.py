@@ -24,8 +24,8 @@ async def send_to_ga(data):
         'dp': '/show/{}/'.format(data.get('snippet_id')),
     }
     try:
-        await aiohttp.get(config.GOOGLE_ANALYTICS_URL, params=params)
-        config.statsd.incr('process_request.ga')
+        async with aiohttp.get(config.GOOGLE_ANALYTICS_URL, params=params) as response:
+            config.statsd.incr('process_request.ga.{}'.format(response.status))
     except (ConnectionRefusedError, aiohttp.errors.ClientError):
         config.statsd.incr('process_request.ga.exception')
 
