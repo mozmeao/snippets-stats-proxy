@@ -21,3 +21,6 @@ statsd==3.2.1 \
     --hash=sha256:3fa92bf0192af926f7a0d9be031fe3fd0fbaa1992d42cf2f07e68f76ac18288e
 chardet==2.3.0 \
     --hash=sha256:e53e38b3a4afe6d1132de62b7400a4ac363452dc5dfcf8d88e8e0cce663c68aa
+gunicorn==19.6.0 \
+    --hash=sha256:723234ea1fa8dff370ab69830ba8bc37469a7cba13fd66055faeef24085e6530 \
+    --hash=sha256:813f6916d18a4c8e90efde72f419308b357692f81333cb1125f80013d22fb618
