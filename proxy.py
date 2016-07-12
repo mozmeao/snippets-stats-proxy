@@ -26,7 +26,7 @@ async def send_to_ga(data):
     try:
         await aiohttp.get(config.GOOGLE_ANALYTICS_URL, params=params)
         config.statsd.incr('process_request.ga')
-    except (ConnectionRefusedError, aiohttp.errors.ClientOSError):
+    except (ConnectionRefusedError, aiohttp.errors.ClientError):
         config.statsd.incr('process_request.ga.exception')
 
 
