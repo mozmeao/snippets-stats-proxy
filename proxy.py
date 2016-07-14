@@ -51,11 +51,15 @@ def webserver():
             loop.create_task(send_to_ga(data))
         config.statsd.incr('view.webhook')
 
+        headers = {
+            'Access-Control-Allow-Origin': 'null',
+        }
+
         if config.MOZILLA_ANALYTICS_URL:
             return aiohttp.web.HTTPFound(
-                '{}?{}'.format(config.MOZILLA_ANALYTICS_URL, request.query_string))
+                '{}?{}'.format(config.MOZILLA_ANALYTICS_URL, request.query_string), headers=headers)
 
-        return aiohttp.web.Response(body=b'OK', content_type='text/plain')
+        return aiohttp.web.Response(body=b'OK', content_type='text/plain', headers=headers)
 
     app = web.Application()
     app.router.add_route('GET', '/foo', webhook)
