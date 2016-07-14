@@ -9,6 +9,7 @@ from aiohttp import web
 import config
 
 async def send_to_ga(data):
+    snippet_id = data.get('snippet_name')
     params = {
         'v': 1,
         'tid': config.GOOGLE_ANALYTICS_ID,
@@ -18,8 +19,8 @@ async def send_to_ga(data):
         'ul': data.get('locale', ''),
         'geoid': data.get('country', ''),
         'ua': data.get('agent', ''),
-        'dt': 'Snippet {}'.format(data.get('snippet_id')),
-        'dp': '/show/{}/'.format(data.get('snippet_id')),
+        'dt': 'Snippet {}'.format(snippet_id),
+        'dp': '/show/{}/'.format(snippet_id),
     }
 
     if data.get('metric', 'impression') == 'impression':
