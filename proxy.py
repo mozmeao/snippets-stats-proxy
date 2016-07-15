@@ -8,6 +8,7 @@ from aiohttp import web
 
 import config
 
+
 async def send_to_ga(data):
     snippet_id = data.get('snippet_name')
     params = {
@@ -17,7 +18,7 @@ async def send_to_ga(data):
         'ds': 'about:home',
         'cid': uuid.uuid4().hex,
         'ul': data.get('locale', ''),
-        'geoid': data.get('country', ''),
+        'geoid': data.get('country', 'xx'),  # If we don't mark a country, AWS gets the credit
         'ua': data.get('agent', ''),
         'dt': 'Snippet {}'.format(snippet_id),
         'dp': '/show/{}/'.format(snippet_id),
