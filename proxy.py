@@ -44,6 +44,9 @@ async def send_to_ga(data):
 def webserver():
     loop = asyncio.get_event_loop()
 
+    def ok_view(request):
+        return aiohttp.web.Response(body=b'OK', content_type='text/plain')
+
     def webhook(request):
         data = {
             'agent': request.headers['USER-AGENT'],
@@ -64,6 +67,7 @@ def webserver():
         return aiohttp.web.Response(body=b'OK', content_type='text/plain', headers=headers)
 
     app = web.Application()
+    app.router.add_route('GET', '/', ok_view)
     app.router.add_route('GET', '/foo', webhook)
     return app
 
