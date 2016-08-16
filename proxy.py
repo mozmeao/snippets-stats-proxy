@@ -22,17 +22,10 @@ async def send_to_ga(data):
         'ua': data.get('agent', ''),
         'dt': 'Snippet {}'.format(snippet_id),
         'dp': '/show/{}/'.format(snippet_id),
+        't': 'event',
+        'ec': data.get('metric', 'impression'),
+        'ea': snippet_id,
     }
-
-    if data.get('metric', 'impression') == 'impression':
-        hittype = {'t': 'pageview'}
-    else:
-        hittype = {
-            't': 'event',
-            'ec': 'clicks',
-            'ea': data.get('metric'),
-        }
-    params.update(hittype)
 
     try:
         async with aiohttp.get(config.GOOGLE_ANALYTICS_URL, params=params) as response:
