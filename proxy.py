@@ -11,6 +11,11 @@ import config
 
 async def send_to_ga(data):
     snippet_id = data.get('snippet_name')
+
+    if not snippet_id:
+        # No snippet ID, nothing to do here.
+        return
+
     params = {
         'v': 1,
         'tid': config.GOOGLE_ANALYTICS_ID,
