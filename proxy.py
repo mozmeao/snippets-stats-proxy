@@ -30,6 +30,7 @@ async def send_to_ga(data):
         't': 'event',
         'ec': data.get('metric', 'impression'),
         'ea': snippet_id,
+        'el': data.get('href', None),
     }
 
     try:
