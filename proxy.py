@@ -11,10 +11,15 @@ import config
 
 async def send_to_ga(data):
     snippet_id = data.get('snippet_name')
-
     if not snippet_id:
         # No snippet ID, nothing to do here.
         return
+
+    snippet_name = data.get('snippet_full_name', '(not set)')
+    metric = data.get('metric', 'impression')
+    locale = data.get('locale', '(not set)')
+    href = data.get('href', '(not set)')
+    href_no_params = href.split('?')[0] if href else '(not set)'
 
     params = {
         'v': 1,
@@ -22,15 +27,23 @@ async def send_to_ga(data):
         'dh': config.GOOGLE_ANALYTICS_DOMAIN,
         'ds': 'about:home',
         'cid': uuid.uuid4().hex,
-        'ul': data.get('locale', ''),
+        'ul': locale,
         'geoid': data.get('country', 'xx'),  # If we don't mark a country, AWS gets the credit
         'ua': data.get('agent', ''),
         'dt': 'Snippet {}'.format(snippet_id),
         'dp': '/show/{}/'.format(snippet_id),
         't': 'event',
-        'ec': data.get('metric', 'impression'),
+        'ec': metric,
         'ea': snippet_id,
-        'el': data.get('href', None),
+        'el': href,
+        'cd1': snippet_id,
+        'cd2': snippet_name,
+        'cd3': data.get('campaign', None),
+        'cd4': href_no_params,
+        'cd5': locale,
+        'cm1': 1 if metric == 'impression' else 0,
+        'cm2': 1 if metric == 'click' else 0,
+        'cm3': 1 if metric == 'snippet-blocked' else 0,
     }
 
     try:
