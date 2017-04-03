@@ -1,0 +1,29 @@
+project:
+  docker_name: mozmeao/snippets-stats
+deploy:
+  prod:
+    - name: "Oregon"
+      url: "https://deis.us-west.moz.works"
+      credentials: jenkins-deis
+      app: "snippets-stats"
+    - name: "Ireland"
+      url: "https://deis.eu-west.moz.works"
+      credentials: jenkins-deis
+      app: "snippets-stats"
+    - name: "Virginia"
+      url: "https://deis.virginia.moz.works"
+      credentials: jenkins-deis-2
+      app: "snippets-stats"
+      deis_executable: "deis2"
+    - name: "Tokyo"
+      url: "https://deis.tokyo.moz.works"
+      credentials: jenkins-deis-2
+      app: "snippets-stats"
+      deis_executable: "deis2"
+notifications:
+  irc:
+    server: irc.mozilla.org:6697
+    channel: "#snippets"
+    nickname: mozmeao-jenkins-snippets
+    on_success: always
+    on_failure: always
