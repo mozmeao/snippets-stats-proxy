@@ -1,5 +1,6 @@
 @Library('github.com/mozmar/jenkins-pipeline@20170303.1')
 def config
+def deployProd = false
 
 conduit {
   node {
