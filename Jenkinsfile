@@ -1,4 +1,4 @@
-@Library('github.com/mozmar/jenkins-pipeline@20170303.1')
+@Library('github.com/mozmar/jenkins-pipeline@20170315.1')
 def config
 def deployProd = false
 
@@ -54,8 +54,9 @@ conduit {
         }
         node {
           lock("push to ${deploy.name}") {
-            deisLogin(deploy.url, deploy.credentials) {
-              deisPull(deploy.app, docker_image)
+            deis_executable = deploy.deis_executable ?: "deis"
+            deisLogin(deploy.url, deploy.credentials, deis_executable) {
+              deisPull(deploy.app, docker_image, null, deis_executable)
             }
           }
         }
