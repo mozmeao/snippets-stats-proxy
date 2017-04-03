@@ -48,8 +48,11 @@ conduit {
 
   if (deployProd) {
     for (deploy in config.deploy.prod) {
-      node {
-        stage ("Deploying to ${deploy.name}") {
+      stage ("Deploying to ${deploy.name}") {
+        timeout(time: 10, unit: 'MINUTES') {
+          input("Push to ${deploy.name}?")
+        }
+        node {
           lock("push to ${deploy.name}") {
             deisLogin(deploy.url, deploy.credentials) {
               deisPull(deploy.app, docker_image)
