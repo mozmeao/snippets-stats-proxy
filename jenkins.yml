@@ -10,13 +10,13 @@ deploy:
       url: "https://deis.eu-west.moz.works"
       credentials: jenkins-deis
       app: "snippets-stats"
-    - name: "Virginia"
-      url: "https://deis.virginia.moz.works"
+    - name: "Tokyo"
+      url: "https://deis.tokyo.moz.works"
       credentials: jenkins-deis-2
       app: "snippets-stats"
       deis_executable: "deis2"
-    - name: "Tokyo"
-      url: "https://deis.tokyo.moz.works"
+    - name: "Frankfurt"
+      url: "https://deis.frankfurt.moz.works"
       credentials: jenkins-deis-2
       app: "snippets-stats"
       deis_executable: "deis2"
