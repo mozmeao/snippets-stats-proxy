@@ -2,14 +2,6 @@ project:
   docker_name: mozmeao/snippets-stats
 deploy:
   prod:
-    - name: "Oregon"
-      url: "https://deis.us-west.moz.works"
-      credentials: jenkins-deis
-      app: "snippets-stats"
-    - name: "Ireland"
-      url: "https://deis.eu-west.moz.works"
-      credentials: jenkins-deis
-      app: "snippets-stats"
     - name: "Tokyo"
       url: "https://deis.tokyo.moz.works"
       credentials: jenkins-deis-2
@@ -17,6 +9,11 @@ deploy:
       deis_executable: "deis2"
     - name: "Frankfurt"
       url: "https://deis.frankfurt.moz.works"
+      credentials: jenkins-deis-2
+      app: "snippets-stats"
+      deis_executable: "deis2"
+    - name: "Portland"
+      url: "https://deis.portland.moz.works"
       credentials: jenkins-deis-2
       app: "snippets-stats"
       deis_executable: "deis2"
